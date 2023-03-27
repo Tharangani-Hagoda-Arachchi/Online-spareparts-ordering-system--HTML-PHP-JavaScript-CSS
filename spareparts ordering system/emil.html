@@ -1,0 +1,71 @@
+<?php
+
+$error =NULL;
+if(isset($_POST['submit'])){
+//get from data
+$u=$_POST['U'];
+$P=$_POST['p']; 
+$P2=$_POST['p2'];
+$e=$_POST['e'];
+
+
+if(strlen ($u)<5){
+$error="<p> user name must  be at least 5 character </p>";}
+elseif($p2 !=$p){
+$error .= "<p> passwords don't match </p>";}
+} else {
+//connect db
+$mysqli =NEW MYSQLi('localhost','root','','test');
+//santize form data
+
+$u=$mysqli-> real_escape_string($u);
+$p=$mysqli-> real_escape_string($p);
+$p2=$mysqli-> real_escape_string($p2);
+$e=$mysqli-> real_escape_string($e);
+//generate vkey
+$vkey =md5(time().$u);
+echo $vkey;
+
+}
+
+}
+
+
+?>
+<html><head>
+<link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<form method="post" action="">
+<table border="0" align="center" cellpadding="5">
+
+<tr>
+<td align="right">Username:</td>
+<td> <input type="Text" name="u" required/></td>
+</tr>
+
+<tr>
+<td align="right">Password:</td>
+<td> <input type="PASSSWORD" name="p" required/></td>
+</tr>
+
+
+<tr>
+<td align="right">Repeat password:</td>
+<td> <input type="PASSWORD" name="p2" required/></td>
+</tr>
+
+<tr>
+<td align="right">Email Address:</td>
+<td> <input type="EMAIL" name="e" required/></td>
+</tr>
+<tr>
+<td  colspan="2"align="center"><input type="SUBMIT" name="submit" value="Register" required/></td>
+</tr>
+</table>
+</form>
+<center>
+<?php
+ echo $error;
+?>
+</center></body></html>
